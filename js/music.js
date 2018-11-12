@@ -1,0 +1,67 @@
+angular.module("myModule",['ng','ngRoute','ngAnimate']).controller("startCtrl",function($scope){
+    //$scope.jumpToDetail=function(){
+    //    $location.path('/detail');//使用JS实现路由跳转
+    //}
+}).controller("mainCtrl",function($scope,$http){
+    $scope.isLoding=true;//是否正在加载
+    $scope.hasMore=true;//服务器端还有更多数据可供加载吗？
+    //加载一批菜品数据【Angular提供的AJAX请求方法】
+    $http.get('data/dish_listbypage.php').success(function(data){
+        $scope.dishList=data;//把服务器返回的数据data设置为Model数据
+        $scope.isLoding=false;//完成加载
+    });
+    $scope.loadMore=function(){//点击加载更多时触发的函数
+        $scope.isLoding=true;
+        $http.get('data/dish_listbypage.php?start='+$scope.dishList.length).success(function(data){
+            if(data.length<5){
+                $scope.hasMore=false;//没有更多数据可供加载了
+            }
+            $scope.dishList=$scope.dishList.concat(data);
+            $scope.isLoding=false;//完成加载
+        });
+    };
+    //搜索功能--监视model数据kw的改变，一改变则立即向服务器发送ajax请求
+    $scope.$watch('kw',function(){
+        //console.log('kw的值发生改变了:'+$scope.kw);
+        if(!$scope.kw){
+            return;//若kw为空字符串或undefined，则退出
+        }
+        $scope.isLoding=true;
+        $http.get('data/dish_listbykw.php?kw='+$scope.kw).success(function(data){
+            $scope.dishList=data;
+            $scope.isLoding=false;
+        });
+    });
+}).controller("detailCtrl",function($scope,$http,$routeParams){//$routePrams是为了读取路由参数
+    console.log($routeParams);
+    $scope.routeParams=$routeParams;
+    $http.get('data/dish_listbydid.php?did='+$routeParams.dno).success(function(data){
+        $scope.dish=data;
+    });
+}).controller("orderCtrl",function($scope,$http,$routeParams){
+        $scope.submitOrder=function(){
+            $http.get('data/order_add.php?user_name='+$scope.user_name+'&sex='+$scope.sex+'&phone='+$scope.phone+'&addr='+$scope.addr+'&did='+$routeParams.dno)
+                .success(function(data){
+                    console.log(data);
+            });
+        }
+}).controller("myorderCtrl",function(){
+
+}).config(function($routeProvider){//配置路由地址
+    $routeProvider.when('/start',{
+        templateUrl:'temp/start.html',
+        controller:'startCtrl'
+    }).when('/main',{
+        templateUrl:'temp/main.html',
+        controller:'mainCtrl'
+    }).when('/detail/:dno',{
+        templateUrl:'temp/detail.html',
+        controller:'detailCtrl'
+    }).when('/order',{
+        templateUrl:'temp/order.html',
+        controller:'orderCtrl'
+    }).when('/myorder',{
+        templateUrl:'temp/myorder.html',
+        controller:'myorderCtrl'
+    })
+});

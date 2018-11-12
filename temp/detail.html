@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+<div ng-include=" 'temp/header.html' "></div>
+
+<div class="container" ng-controller="detailCtrl">
+    <ol class="breadcrumb">
+        <li><a href="#/main">菜单</a></li>
+        <li class="active">详情</li>
+    </ol>
+    <!--<p>{{dish}}</p>-->
+    <ul class="list-unstyled">
+        <li>{{dish.name}}</li>
+        <li><img ng-src="images/{{dish.img_lg}}" class="img-thumbnail" width="500px"></li>
+        <li><strong>主要原料：</strong>{{dish.material}}</li>
+        <li>{{dish.detail}}</li>
+        <li class="text-danger">￥{{dish.price}}</li>
+    </ul>
+    <div class="navbar navbar-default">
+        <a class="btn btn-success " href="#/order">我要订餐</a>
+        <a class="btn btn-warning " href="#/main">我再看看</a>
+    </div>
+</div>
+
+<div ng-include=" 'temp/footer.html' "></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>order</title>
+</head>
+<body>
+<div ng-include=" 'temp/header.html' "></div>
+
+<div class="container" ng-controller="detailCtrl">
+    <div class="panel-title">
+        <div class="panel-body">
+            <form role="form">
+                <p>联系人:</p>
+                <input ng-model="user_name" type="text" class="form-control" placeholder="username">
+                <p>性别:</p>
+                <input ng-model="sex" type="radio" name="sex">先生
+                <input ng-model="sex" type="radio" name="sex">女士
+                <p>联系电话:</p>
+                <input ng-model="phone" type="text" class="form-control" placeholder="phone">
+                <p>送餐地址:</p>
+                <textarea  ng-model="addr" name="address" cols="30" rows="3"></textarea><br>
+                <a href="#/myorder"><input ng-click="submitOrder()" type="button" class="btn btn-success btn-block" value="提交订单"></a>
+                <!--<button class="btn btn-success"><a href="#/myorder">确定下单</a></button>-->
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-include=" 'temp/footer.html' "></div>
+</body>
+</html>

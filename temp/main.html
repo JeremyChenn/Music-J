@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <style>
+        .loding{
+            width:20px;
+            height:20px;
+        }
+        .material{
+            font-family:"微软雅黑";
+            font-size:12px;
+        }
+    </style>
+</head>
+<body>
+<div ng-include=" 'temp/header.html' "></div>
+
+<div class="container" ng-controller="mainCtrl">
+    <input type="text" class="form-control" placeholder="请输入菜名/原材料名" ng-model="kw"><!--产品搜索栏-->
+    <br>
+    <!--方式1:table布局-->
+    <!--<table class="table table-bordered">-->
+    <!--<tr>-->
+    <!--<td>编号</td>-->
+    <!--<td>菜品</td>-->
+    <!--<td>价格</td>-->
+    <!--<td>配料</td>-->
+    <!--<td>图片</td>-->
+    <!--</tr>-->
+    <!--<tr ng-repeat="kind in dishList">-->
+    <!--<td ng-repeat="detail in kind"><a href="#/detail/1">{{detail}}</a></td>-->
+    <!--</tr>-->
+    <!--</table>-->
+
+    <!--方式2:ul布局-->
+    <!--<ul ng-repeat="kind in dishList" class="list-unstyled" >-->
+    <!--<li><h4><a href="#/detail/{{kind.did}}">{{kind.name}}</a></h4></li>-->
+    <!--<li><img ng-src="images/{{kind.img_sm}}"></li>-->
+    <!--<li>{{kind.material}}</li>-->
+    <!--<li class="text-danger">￥{{kind.price}}</li>-->
+    <!--</ul>-->
+    <ul ng-repeat="kind in dishList" class="list-inline" >
+        <li><img ng-src="images/{{kind.img_sm}}" class="img-thumbnail"></li>
+        <li>
+            <ul class="list-unstyled" >
+                <li><h4><a href="#/detail/{{kind.did}}">{{kind.name}}</a></h4></li>
+                <li class="material">主要食料：{{kind.material}}</li>
+                <li class="text-danger">￥{{kind.price}}</li>
+            </ul>
+        </li>
+
+    </ul>
+    <!--<dl class="dl-horizontal"  ng-repeat="kind in dishList">-->
+        <!--<dt><img ng-src="images/{{kind.img_sm}}"></dt>-->
+        <!--<dd><h4><a href="#/detail/{{kind.did}}">{{kind.name}}</a></h4></dd>-->
+        <!--<dd>主要食料：{{kind.material}}</dd>-->
+        <!--<dd class="text-danger">￥{{kind.price}}</dd>-->
+    <!--</dl>-->
+    <div class="navbar">
+    <button class="btn btn-primary btn-block" ng-disabled="isLoding" ng-click="loadMore()"  ng-if="hasMore"><!--btn-block表示贯穿整行-->
+        <span ng-hide="isLoding">加载更多</span>
+        <img ng-show="isLoding" src="images/loading_ajax.gif" class="loding">
+    </button>
+    <div class="alert alert-danger" ng-hide="hasMore">
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
+        <span>没有更多数据可加载！</span>
+    </div>
+    </div>
+</div>
+
+<div ng-include=" 'temp/footer.html' "></div>
+</body>
+</html>

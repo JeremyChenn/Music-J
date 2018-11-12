@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule123">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <title>Title</title>
+</head>
+<body>
+    <div ng-controller="myCtrl" class="container">
+        <table class="table table-bordered">
+            <tr ng-repeat="ld in user">
+                <td ng-repeat="name in ld">{{name}}</td>
+            </tr>
+        </table>
+    </div>
+    <script src="../js/angular.js"></script>
+    <script>
+        angular.module("myModule123",['ng']).controller('myCtrl',function($scope){
+            $scope.user=[
+                {"name":"李思琦","pwd":123456,"sex":"男"},
+                {"name":"王丹晔","pwd":123456,"sex":"女"},
+                {"name":"陈英杰","pwd":123456,"sex":"男"}
+            ];
+        });
+    </script>
+</body>
+</html>
